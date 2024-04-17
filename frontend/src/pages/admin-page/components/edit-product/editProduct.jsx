@@ -20,7 +20,7 @@ const EditProductContainer = ({className, setIsOpenEditProduct}) => {
 
     
     useEffect(() => {
-        Promise.all([request('/api/categories'), request('api/products')])
+        Promise.all([request('/api/categories'), request('/api/products')])
         .then(([{data: {categories}}, {data: {products}}]) => {
             setCategories(categories);
             setProducts(products);
