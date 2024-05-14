@@ -4,6 +4,7 @@ import { DeliveryForm } from "../delivery-form/deliveryForm";
 import { useState } from "react";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { basketCounter } from "../../../../utils";
+import { device } from "../../../../adaptiv-styled/device";
 
 const GeneralBasketContainer = ({className}) => {
     const [deliveryIsOpen, setDeliveryIsOpen] = useState(false)
@@ -12,7 +13,8 @@ const GeneralBasketContainer = ({className}) => {
 
     return (
         <div className={className}>
-            <Title title={`Сумма заказа: ${sumCounter} ₽`} size="38px" />
+            <Title title="Сумма заказа:" size="38px" />
+            <Title title={`${sumCounter} ₽`} size="38px" />
             {deliveryIsOpen
             ? <DeliveryForm />
             : (
@@ -37,7 +39,6 @@ display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
-width: 55%;
 margin-bottom: 20px;
 padding: 20px;
 background-color: #3f1f1f; 
@@ -51,4 +52,12 @@ border-radius: 10px;
     font-size: 18px;
     color: #fff;
 }
+
+@media ${device.desktop} {
+    width: 70%;
+  }
+  
+  @media ${device.tablet} {
+    width: 97%;
+  }
 `

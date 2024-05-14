@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { useState } from "react";
-import { Button, Input, Title } from "../../../../../../components";
+import { Button, Input } from "../../../../../../components";
 import { useDispatch } from "react-redux";
 import { saveCategoryAsync } from "../../../../../../actions";
 import PropTypes from 'prop-types';
@@ -27,21 +27,19 @@ const EditBlockCategoryContainer = ({className, isEditCategory, setIsEditCategor
     return (
         <div className={className} key={id}>
             <div className="block-edit">
-                <Title type="url" title="Фото" size="30px" top="0"/>
+                <div className="block-name">Фото</div>
                 <Input value={imageUrlValue} placeholder="URL фото..." onChange={onImageChange}/>     
             </div>
             <div className="block-edit">
-                <Title title="Название" size="30px" top="0"/>
+                <div className="block-name">Название</div>
                 <Input value={titleValue} placeholder="Название..." onChange={onTitleChange}/>     
             </div>
-            <div className="block-edit">
-                <Button children="Вернуться в меню редактирования"
-                    onClick={() => setIsEditCategory(null)}
-                />
-                <Button children="Coхранить"
-                    onClick={() => onSave()}
-                />
-            </div>
+            <Button children="Вернуться в меню редактирования"
+                onClick={() => setIsEditCategory(null)}
+            />
+            <Button children="Coхранить"
+                onClick={() => onSave()}
+            />
     </div>
     );
 };
@@ -49,6 +47,8 @@ const EditBlockCategoryContainer = ({className, isEditCategory, setIsEditCategor
 export const EditBlockCategory = styled(EditBlockCategoryContainer)`
     display: flex;
     flex-direction: column;
+    margin: 10px;
+    gap: 10px;
     .block-edit {
         display: flex;
         gap: 10px;
@@ -61,6 +61,12 @@ export const EditBlockCategory = styled(EditBlockCategoryContainer)`
         border-radius: 5px;
         padding: 10px;
         font-size: 18px;
+    }
+    .block-name {
+        text-align: center;
+        font-weight: 700;
+        color: #fff;
+        font-size: 24px;
     }
 `;
 

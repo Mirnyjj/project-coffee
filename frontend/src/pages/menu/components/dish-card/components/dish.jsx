@@ -29,9 +29,9 @@ const DishContainer = ({className, id, title, imageUrl, price}) => {
                     <NavLink to={`/product/${id}`}>
                         <Img 
                             imageUrl={imageUrl} 
-                            name={title} 
-                            width="100%" 
-                            height="600px"
+                            name={title}  
+                            width="300px" 
+                            height="400px"
                             radius="10px 10px 0 0"  
                         />
                         <div className="product-menu">{title}</div>
@@ -66,7 +66,7 @@ const DishContainer = ({className, id, title, imageUrl, price}) => {
 export const Dish = styled(DishContainer)`
     position: relative;
     text-align: center;
-    width: 460px;
+    width: 300px;
     margin: 10px;
     opacity: 0.8;
     background-color: #7490ed;

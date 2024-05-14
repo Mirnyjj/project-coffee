@@ -1,6 +1,5 @@
 import { RESET_PRODUCT_DATA } from "../../../../actions";
 
-export const onResetProduct = (setIsEditProduct) => (dispatch) => {
-    setIsEditProduct(null)
+export const onResetProduct = () => (dispatch) => {
     dispatch(RESET_PRODUCT_DATA)
 }

@@ -47,9 +47,10 @@ const OrderContainer = ({className}) => {
     return isLoading ? <Loader /> : (
         <PrivateContent access={[ROLE.ADMIN]}>
         <div className={className}>
-            <Title title="Заказы" size="50px" />
-            <div className="seearch">
-            <Title title="Введите 4 последние цифры номера телефона для поиска заказа" size="25px" />
+            <div className="search">
+            <div className="search-name">
+                Введите 4 последние цифры номера телефона для поиска заказа
+            </div>
             <Search searchPhrase={searchPhrase} onChange={onSearch}/>
             </div>
             {notFound ?
@@ -81,8 +82,11 @@ const OrderContainer = ({className}) => {
 }
 
 export const Order = styled(OrderContainer)`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
-    .seearch {
+    .search {
         display: flex;
         flex-direction: column;
         padding: 20px;
@@ -91,7 +95,7 @@ export const Order = styled(OrderContainer)`
     .orders {
         display: flex;
         flex-wrap: wrap;
-        gap: 20px;
+        justify-content: center;
         margin-bottom: 20px;
     }
     .order {
@@ -101,6 +105,7 @@ export const Order = styled(OrderContainer)`
         background-color: #553131;
         border-radius: 10px;
         width: 490px;
+        margin: 10px;
     }
     .delivery-terms {
         display: flex;
@@ -109,5 +114,12 @@ export const Order = styled(OrderContainer)`
         font-size: 14px;
         font-weight: 700;
         color: #e9b900;
+    }
+
+    .search-name {
+        text-align: center;
+        font-weight: 700;
+        color: #fff;
+        font-size: 18px;
     }
 `

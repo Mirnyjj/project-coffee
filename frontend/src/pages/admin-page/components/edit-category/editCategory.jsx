@@ -2,21 +2,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { styled } from "styled-components";
 import { selectCategory } from "../../../../selectors";
 import { useEffect, useState } from "react";
-import { Button, Icon, Img, Loader } from "../../../../components";
+import { Button, Icon, Img, Loader, Title } from "../../../../components";
 import { EditBlockCategory } from "./components/edit-block-category/editBlockCategory";
 import { onResetCategory } from "./utils";
 import { RESET_CATEGORY_DATA } from "../../../../actions";
-import PropTypes from 'prop-types';
 import { request } from "../../../../utils";
+import { useNavigate } from "react-router";
+import { device } from "../../../../adaptiv-styled/device";
 
 
-const EditCategoryContainer = ({className, setIsOpenEditCategory}) => {
+const EditCategoryContainer = ({className}) => {
     const [isEditCategory, setIsEditCategory] = useState(null);
     const [isDeleteCategory, setIsDeleteCategory] = useState(false);
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const category = useSelector(selectCategory);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
             request('/api/categories').then(({data: {categories}}) => {
@@ -28,24 +30,25 @@ const EditCategoryContainer = ({className, setIsOpenEditCategory}) => {
 
     const onDeleteCategory = (id) => {
         setIsLoading(true)
-        request(`/api/categories/${id}`, 'DELETE').then((res) => {
+        request(`/api/categories/${id}`, 'DELETE').then(() => {
             setIsDeleteCategory(true);
             dispatch(RESET_CATEGORY_DATA)
             setIsLoading(false)
         });
     }
-    
-    return isLoading || (categories.length === 0 && category.length === 0) ? <Loader />
-    : (
-        isEditCategory ? 
-        <EditBlockCategory 
-            isEditCategory={isEditCategory} 
-            setIsEditCategory={setIsEditCategory}
-            setCategories={setCategories}
-        />
-        :
-        <div className={className}>
-            <Button widht="50%" children="Вернуться в меню" onClick={() => dispatch(onResetCategory(setIsOpenEditCategory))} />
+
+    if(isLoading || (categories.length === 0 && category.length === 0)) {
+        return <Loader />
+    } else if(isEditCategory) {
+        return <EditBlockCategory 
+                    isEditCategory={isEditCategory} 
+                    setIsEditCategory={setIsEditCategory}
+                    setCategories={setCategories}
+                />
+    } else {
+        return <div className={className}>
+                    <Title title='Редактирование категорий' />
+                    <Button widht="50%" children="Вернуться в меню" onClick={() => (dispatch(onResetCategory()), navigate('/administration-page'))} />
                     <table className="table">
                         <thead>
                             <tr>
@@ -63,8 +66,8 @@ const EditCategoryContainer = ({className, setIsOpenEditCategory}) => {
                                                 inactive={true}
                                                 imageUrl={category.imageUrl} 
                                                 name={category.title} 
-                                                width="100%" 
-                                                height="300px"
+                                                width="100px" 
+                                                height="100px"
                                                 radius="10px"
                                             />
                                         </td>
@@ -92,8 +95,9 @@ const EditCategoryContainer = ({className, setIsOpenEditCategory}) => {
                             ),
                             )}
                     </table>
-                </div>
-    )
+            </div>
+    }
+
 };
 
 export const EditCategory = styled(EditCategoryContainer)`
@@ -130,8 +134,11 @@ export const EditCategory = styled(EditCategoryContainer)`
         align-items: center;
     }
 
-`
+    @media(${device.tablet}){
+        margin: 10px;
+        .table th, .table td {
+            padding: 10px;
+        }
+    }
 
-EditCategory.propTypes = {
-    setIsOpenEditCategory: PropTypes.func.isRequired,
-}
+`

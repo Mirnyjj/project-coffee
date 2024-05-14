@@ -73,7 +73,7 @@ const RegistrationContainer = ({className}) => {
 
     if (roleId !== ROLE.GUEST) {
         return <Navigate to="/" />
-    };
+    }
 
     return (
         <div className={className}>

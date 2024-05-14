@@ -2,22 +2,22 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { styled } from "styled-components";
 import { saveCategoryAsync } from "../../../../actions";
-import { Button, Input, Title } from "../../../../components";
-import PropTypes from 'prop-types';
+import { Button, Input } from "../../../../components";
+import { useNavigate } from "react-router";
 
 
-const AddCategoryContainer = ({className, setIsOpenAddCategory, setIsOpenEditCategory}) => {
+const AddCategoryContainer = ({className}) => {
     const [imageUrlValue, setImageUrlValue] = useState('');
     const [titleValue, setTitleValue] = useState('');
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const onSave = () => {
         dispatch(saveCategoryAsync({
             imageUrl: imageUrlValue,
             title: titleValue,
         }))
-        setIsOpenAddCategory(false);
-        setIsOpenEditCategory(true);
+        navigate('/administration-page/edit-category')
     }
 
 
@@ -27,21 +27,19 @@ const AddCategoryContainer = ({className, setIsOpenAddCategory, setIsOpenEditCat
     return (
         <div className={className} >
             <div className="block-edit">
-                <Title type="url" title="Фото" size="30px" top="0"/>
+                <div className="block-name">Фото</div>
                 <Input value={imageUrlValue} placeholder="URL фото..." onChange={onImageChange}/>     
             </div>
             <div className="block-edit">
-                <Title title="Название" size="30px" top="0"/>
+                <div className="block-name">Название</div>
                 <Input value={titleValue} placeholder="Название..." onChange={onTitleChange}/>     
             </div>
-            <div className="block-edit">
-                <Button children="Вернуться в меню редактирования"
-                    onClick={() => setIsOpenAddCategory(false)}
-                />
-                <Button children="Coхранить"
-                    onClick={() => onSave()}
-                />
-            </div>
+            <Button children="Вернуться в меню редактирования"
+                onClick={() => navigate('/administration-page')}
+            />
+            <Button children="Coхранить"
+                onClick={() => onSave()}
+            />
     </div>
     );
 };
@@ -49,6 +47,8 @@ const AddCategoryContainer = ({className, setIsOpenAddCategory, setIsOpenEditCat
 export const AddCategory = styled(AddCategoryContainer)`
     display: flex;
     flex-direction: column;
+    margin: 10px;
+    gap: 10px;
     .block-edit {
         display: flex;
         gap: 10px;
@@ -62,9 +62,10 @@ export const AddCategory = styled(AddCategoryContainer)`
         padding: 10px;
         font-size: 18px;
     }
+    .block-name {
+        text-align: center;
+        font-weight: 700;
+        color: #fff;
+        font-size: 24px;
+    }
 `;
-
-AddCategory.propTypes = {
-    setIsOpenAddCategory: PropTypes.func.isRequired,
-    setIsOpenEditCategory: PropTypes.func.isRequired,
-}

@@ -93,6 +93,8 @@ export const Menu = styled(MenuContainer)`
     .categories-list {
         display: flex;
         flex-wrap: wrap;
+        justify-content: center; 
+
 
     }
 

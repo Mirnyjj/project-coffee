@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
 import { Title } from "../../../../components";
 import { basketCounter } from "../../../../utils";
-import PropTypes from 'prop-types';
 import { PROP_TYPE } from "../../../../constants";
+import { device } from "../../../../adaptiv-styled/device";
 
 const ProductsContainer = ({className, products}) => {
     const {sumQuantity, sumCounter} = basketCounter(products);
@@ -67,6 +67,16 @@ export const Products = styled(ProductsContainer)`
         padding: 10px;
         word-break: break-word;
         font-size: 14px;
+    }
+
+    @media(${device.tablet}){
+        .products-content {
+            margin: 10px 10px 0px;
+        }
+        .table th, .table td {
+            padding: 5px;
+            
+        }
     }
 
 `

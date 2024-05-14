@@ -11,8 +11,8 @@ const MenuCardContainer = ({className, id, title, imageUrl }) => {
             <Img 
                 imageUrl={imageUrl} 
                 name={title} 
-                width="450px" 
-                height="600px"
+                width="300px" 
+                height="400px"
                 radius="10px"  
             />
             <div className="category-menu">{title}</div>

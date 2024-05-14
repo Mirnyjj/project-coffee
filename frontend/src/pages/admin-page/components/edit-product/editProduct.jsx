@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import { Button, Icon, Img, Loader } from "../../../../components";
+import { Button, Icon, Img, Loader, Title } from "../../../../components";
 import { EditBlockProduct } from "./components/edit-block-product/editBlockProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { selectProduct } from "../../../../selectors";
 import { onResetProduct } from "../utils/on-reset-product";
 import { RESET_PRODUCT_DATA } from "../../../../actions";
-import PropTypes from 'prop-types';
 import { request } from "../../../../utils";
+import { useNavigate } from "react-router";
 
-const EditProductContainer = ({className, setIsOpenEditProduct}) => {
+const EditProductContainer = ({className}) => {
     const [products, setProducts] = useState([]);
     const [isEditProduct, setIsEditProduct] = useState(null);
     const [isDeleteProduct, setIsDeleteProduct] = useState(false);
@@ -17,6 +17,7 @@ const EditProductContainer = ({className, setIsOpenEditProduct}) => {
     const dispatch = useDispatch();
     const [categories, setCategories] = useState([])
     const productStor = useSelector(selectProduct);
+    const navigate = useNavigate()
 
     
     useEffect(() => {
@@ -32,62 +33,58 @@ const EditProductContainer = ({className, setIsOpenEditProduct}) => {
 
     const onDeleteProduct = (id) => {
         setIsLoading(true)
-        request(`/api/products/${id}`, 'DELETE').then((res) => {
+        request(`/api/products/${id}`, 'DELETE').then(() => {
             setIsDeleteProduct(true);
             dispatch(RESET_PRODUCT_DATA)
             setIsLoading(false)
-        });;
+        });
     }
-    
-    return isLoading || (productStor.length === 0 && products.length === 0) ? <Loader /> 
-    : (
-        isEditProduct ? 
-        <EditBlockProduct 
-            isEditProduct={isEditProduct} 
-            setIsEditProduct={setIsEditProduct}
-            setProducts={setProducts}
-        />
-        :
-        <div className={className}>
-            <Button widht="50%" children="Вернуться в меню" onClick={() => dispatch(onResetProduct(setIsOpenEditProduct))} />
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>Фото</th>
-                                <th>Наименование</th>
-                                <th>Описание</th>
-                                <th>Категория</th>
-                                <th>Стоимость</th>
-                                <th>Действия</th>
-                            </tr>
-                        </thead>
+
+    if(isLoading || (productStor.length === 0 && products.length === 0)) {
+        <Loader />
+    } else if(isEditProduct){
+        return <EditBlockProduct 
+                    isEditProduct={isEditProduct} 
+                    setIsEditProduct={setIsEditProduct}
+                    setProducts={setProducts}
+                />
+        
+    } else {
+        return <div className={className}>
+                    <Title title='Редактирование товаров' />
+                    <Button widht="50%" children="Вернуться в меню" onClick={() => (dispatch(onResetProduct()), navigate('/administration-page'))} />
+                    <div className="product-list">
                         {(productStor.length !== 0 ? productStor : products).map(
                             (product) => (
-                                <tbody key={product.id}>
-                                    <tr>
-                                        <td>                        
+                                <div className="card-product" key={product.id}>
+                                        <div>                 
                                             <Img 
                                                 inactive={true}
                                                 imageUrl={product.imageUrl} 
                                                 name={product.title} 
-                                                width="100%" 
-                                                height="100px"
+                                                width="300px" 
+                                                height="300px"
                                                 radius="10px"
                                             />
-                                        </td>
-                                        <td>{product.title}</td>
-                                        <td>
-                                            {product.description}
-                                        </td>
-                                        <td>
+                                        </div>
+                                        <div className="box-description">
+                                            Наименование: {product.title}
+                                        </div>
+                                        <div className="box-description">
+                                            Описание: {product.description}
+                                        </div>
+                                        <div className="box-description">
                                             {categories.map(({id, title}) => {
                                                 if(id === product.categoryId) {
-                                                    return title
+                                                    return `Категория: ${title}`
                                                 }
                                             })}
-                                        </td>
-                                        <td>{product.price} ₽</td>
-                                        <td>
+                                        </div>
+                                        <div className="box-description">
+                                            Стоимость: {product.price} ₽
+                                        </div>
+                                        <div className="box-description">
+                                            <div className="box6">Действия</div>
                                             <div className="action-button">
                                                 <Icon
                                                     inactive={false}
@@ -104,43 +101,49 @@ const EditProductContainer = ({className, setIsOpenEditProduct}) => {
                                                     onClick={() => onDeleteProduct(product.id)}
                                                 />
                                             </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                        </div>
+                                </div>
                             ),
                             )}
-                    </table>
+                    </div>
                 </div>
-    )
+    }
+    
 };
 
 export const EditProduct = styled(EditProductContainer)`
     display: flex;
-    flex-wrap: wrap;
-    margin: 20px 20px 20px;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 10px;
+    align-items: center;
     justify-content: center;
 
-    .table {
-        margin-top: 20px;
-        border: 1px solid #dddddd;
-        border-collapse: collapse; 
-        color: #fff;
-        background-color: #3f1f1f;
+    .product-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
     }
-    .table th {
-        font-weight: 700;
-        padding: 30px;
-        background: #efefef;
-        font-size: 15px;
-        color: #000;
-    }
-    .table td {
+
+    .card-product {
+        display: flex;
+        flex-direction: column;
         text-align: center;
-        padding: 10px;
-        font-weight: 600;
-        word-break: break-word;
-        font-size: 15px;
+        font-weight: 700;
+        padding: 5px;
+        color: #fff;
+        align-items: center;
+        font-size: 16px;
+        gap: 5px;
+        max-width: 300px;
     }
+
+    .box-description{
+        paddig: 10px;
+        width: 300px;
+    }
+
     .action-button {
         display: flex;
         justify-content: center;
@@ -149,7 +152,3 @@ export const EditProduct = styled(EditProductContainer)`
     }
 
 `
-
-EditProduct.propTypes = {
-    setIsOpenEditProduct: PropTypes.func.isRequired,
-}

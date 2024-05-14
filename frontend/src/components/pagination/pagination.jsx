@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import PropTypes from 'prop-types';
 import { Button } from "../button/button";
+import { device } from "../../adaptiv-styled/device";
 
 const PaginationContainer = ({className, page, setPage, lastPage}) => {
     
@@ -11,7 +12,6 @@ const PaginationContainer = ({className, page, setPage, lastPage}) => {
             <div className="current-page">Страница: {page}</div>
             <Button disabled={page === lastPage} onClick={() => setPage(page+1)} >Следующая</Button>
             <Button disabled={page === lastPage} onClick={() => setPage(lastPage)} >В конец</Button>
-
         </div>
     )
 };
@@ -20,15 +20,13 @@ const PaginationContainer = ({className, page, setPage, lastPage}) => {
 export const Pagination = styled(PaginationContainer)`
     display: flex;
     justify-content: center;
-    width: 100%;
     margin: 0 0 20px;
-    padding: 0 35px;
 
     & button {
         margin: 0 5px;
     }
 
-    & .current-page {
+    .current-page {
         width: 100%;
         height: 32px;
         margin: 0px 5px;
@@ -39,6 +37,20 @@ export const Pagination = styled(PaginationContainer)`
         border: 1px solid #fff;
         color: #fff;
     }
+    
+    @media ${device.desktop} {
+      padding: 0 35px;
+      .current-page {
+          display: none;
+      }
+    }
+      @media ${device.tablet} {
+        padding: 0 15px;
+        .current-page {
+            display: none;
+        }
+      }
+
 
 `;
 

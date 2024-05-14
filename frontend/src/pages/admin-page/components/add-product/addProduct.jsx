@@ -1,13 +1,12 @@
 import { styled } from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { selectCategories } from "../../../../selectors";
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { Button, Input, Title } from "../../../../components";
+import { Button, Input } from "../../../../components";
 import { saveProductAsync } from "../../../../actions";
-import PropTypes from 'prop-types';
 import { request } from "../../../../utils";
+import { useNavigate } from "react-router";
 
-const AddProductContainer = ({className, setIsOpenAddProduct, setIsOpenEditProduct}) => {
+const AddProductContainer = ({className}) => {
     const [categories, setCategories] = useState([])
     const dispatch = useDispatch();
     const [imageUrlValue, setImageUrlValue] = useState('');
@@ -15,10 +14,11 @@ const AddProductContainer = ({className, setIsOpenAddProduct, setIsOpenEditProdu
     const [descriptionValue, setDescriptionValue] = useState('');
     const [priceValue, setPriceValue] = useState('');
     const [categoryIdValue, setCategoryIdValue] = useState(0);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
-        request('api/categories').then(({data: {categories}}) => {
+        request('/api/categories').then(({data: {categories}}) => {
             setCategories(categories);
         })
     }, [])
@@ -30,10 +30,8 @@ const AddProductContainer = ({className, setIsOpenAddProduct, setIsOpenEditProdu
             description: descriptionValue,
             price: priceValue,
             categoryId: categoryIdValue,
-
         }))
-        setIsOpenAddProduct(false);
-        setIsOpenEditProduct(true);
+        navigate('/administration-page/edit-product')
     };
 
     const onImageChange = ({target}) => setImageUrlValue(target.value);
@@ -46,19 +44,19 @@ const AddProductContainer = ({className, setIsOpenAddProduct, setIsOpenEditProdu
     return (
         <div className={className}>
             <div className="block-edit">
-                <Title title="Фото" size="30px" top="0"/>
+                <div className="block-name">Фото</div>
                 <Input value={imageUrlValue} placeholder="URL фото..." onChange={onImageChange}/>     
             </div>
             <div className="block-edit">
-                <Title title="Название" size="30px" top="0"/>
+                <div className="block-name">Название</div>
                 <Input value={titleValue} placeholder="Название..." onChange={onTitleChange}/>     
             </div>
             <div className="block-edit">
-                <Title title="Описание" size="30px" top="0"/>
+                <div className="block-name">Описание</div>
                 <Input value={descriptionValue} placeholder="Описание..." onChange={onDescriptionChange}/>     
             </div>
             <div className="block-edit">
-                <Title title="Категория" size="30px" top="0"/>
+                <div className="block-name">Категория</div>
                 <select className="category-product" onChange={onCategoryIdChange}>
                             {categories.map(({id: categoryId, title: categoryName}) => (
                                 <option key={categoryId} value={categoryId}>{categoryName}</option>
@@ -66,17 +64,15 @@ const AddProductContainer = ({className, setIsOpenAddProduct, setIsOpenEditProdu
                         </select>      
             </div>
             <div className="block-edit">
-                <Title title="Стоимость" size="30px" top="0"/>
+                <div className="block-name">Стоимость</div>
                 <Input  width="30%" type="number" value={priceValue} placeholder="Стоимость..." onChange={onPriceChange}/>      
             </div>
-            <div className="block-edit">
-                <Button children="Вернуться в меню"
-                    onClick={() => setIsOpenAddProduct(false)}
-                />
-                <Button children="Coхранить"
-                    onClick={() => onSave()}
-                />
-            </div>
+            <Button children="Вернуться в меню"
+                onClick={() => navigate('/administration-page')}
+            />
+            <Button children="Coхранить"
+                onClick={() => onSave()}
+            />
     </div>
     );
 };
@@ -84,6 +80,8 @@ const AddProductContainer = ({className, setIsOpenAddProduct, setIsOpenEditProdu
 export const AddProduct = styled(AddProductContainer)`
     display: flex;
     flex-direction: column;
+    margin: 10px;
+    gap: 10px;
     .block-edit {
         display: flex;
         gap: 10px;
@@ -97,9 +95,10 @@ export const AddProduct = styled(AddProductContainer)`
         padding: 10px;
         font-size: 18px;
     }
+    .block-name {
+        text-align: center;
+        font-weight: 700;
+        color: #fff;
+        font-size: 24px;
+    }
 `;
-
-AddProduct.propTypes = {
-    setIsOpenAddProduct: PropTypes.func.isRequired,
-    setIsOpenEditProduct: PropTypes.func.isRequired,
-}

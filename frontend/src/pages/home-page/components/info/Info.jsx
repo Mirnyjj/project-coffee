@@ -1,12 +1,13 @@
 import { styled } from "styled-components";
-import { Icon, Title } from "../../../../components";
+import { Title } from "../../../../components";
+import { device } from "../../../../adaptiv-styled/device";
 
 
 const InfoContainer = ({ className }) => {
 
     return (
         <div className={className}>
-            <Title title="О нашем lounge cafe ELITE 2.0" size="50px" />
+            <Title title="О нашем lounge cafe ELITE 2.0"/>
             <div className="info-text">
             <p>
             Каждые выходные задаетесь вопросом: «Куда сходить?»
@@ -39,24 +40,6 @@ const InfoContainer = ({ className }) => {
                         <div className="contact">
                             +7 (937) 881-85-78
                         </div>
-                        <div className="contact">
-                            <a href="https://vk.com/club190177686">
-                            <Icon 
-                                id="fa-vk" 
-                                margin="-18px 0 0px 0"
-                                size="70px"
-                                color='#2552d7'
-                            />
-                            </a>
-                            <a href="https://t.me/Elite_inza">
-                            <Icon 
-                                id="fa-telegram" 
-                                margin="auto"
-                                size="50px"
-                                color='#2552d7'
-                            />
-                            </a>
-                        </div>
                 </div>
             </div>
 
@@ -66,10 +49,16 @@ const InfoContainer = ({ className }) => {
 };
 
 export const Info = styled(InfoContainer)`
+@media ${device.desktop} {
+    font-size: 24px;
+  }
+  
+  @media ${device.tablet} {
+    font-size: 12px;
+  }
 margin-top: 40px; 
 border-top: 4px solid white;
     .info-text {
-        font-size: 24px;
         font-weight: 700;
         color: white;
         padding: 10px;
@@ -79,7 +68,6 @@ border-top: 4px solid white;
     .info-cafe {
         display: flex;
         justify-content: space-between;
-        font-size: 24px;
         font-weight: 700;
         color: #e9b900;
     }
@@ -91,10 +79,6 @@ border-top: 4px solid white;
         display: flex;
         flex-direction: column;
         padding: 10px;  
-    }
-    .contact {
-        display: flex;
-        gap: 10px;
     }
 
 `;

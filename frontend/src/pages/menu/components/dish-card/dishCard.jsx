@@ -44,7 +44,8 @@ const DishCardContainer = ({className}) => {
 export const DishCard = styled(DishCardContainer)`
     display: flex;
     flex-wrap: wrap;
-    padding: 20px 20px 80px;
+    padding: 20px 0 ;
+    justify-content: center; 
 
 `;
 

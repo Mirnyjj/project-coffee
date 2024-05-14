@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { useEffect, useState } from "react";
-import { Button, Input, Title } from "../../../../../../components";
+import { Button, Input } from "../../../../../../components";
 import { useDispatch, } from "react-redux";
 import { saveProductAsync } from "../../../../../../actions";
 import PropTypes from 'prop-types';
@@ -46,19 +46,19 @@ const EditBlockProductContainer = ({className, isEditProduct, setIsEditProduct, 
     return (
         <div className={className} key={id}>
             <div className="block-edit">
-                <Title type="url" title="Фото" size="30px" top="0"/>
+                <div className="block-name">Фото</div>
                 <Input value={imageUrlValue} placeholder="URL фото..." onChange={onImageChange}/>     
             </div>
             <div className="block-edit">
-                <Title title="Название" size="30px" top="0"/>
+                <div className="block-name">Название</div>
                 <Input value={titleValue} placeholder="Название..." onChange={onTitleChange}/>     
             </div>
             <div className="block-edit">
-                <Title title="Описание" size="30px" top="0"/>
+                <div className="block-name">Описание</div>
                 <Input value={descriptionValue} placeholder="Описание..." onChange={onDescriptionChange}/>     
             </div>
             <div className="block-edit">
-                <Title title="Категория" size="30px" top="0"/>
+                <div className="block-name">Категория</div>
                 <select className="category-product" value={categoryIdValue} onChange={onCategoryIdChange}>
                             {categories.map(({id: categoryId, title: categoryName}) => (
                                 <option key={categoryId} value={categoryId}>{categoryName}</option>
@@ -66,17 +66,15 @@ const EditBlockProductContainer = ({className, isEditProduct, setIsEditProduct, 
                         </select>      
             </div>
             <div className="block-edit">
-                <Title title="Стоимость" size="30px" top="0"/>
+                <div className="block-name">Стоимость</div>
                 <Input  width="30%" type="number" value={priceValue} placeholder="Стоимость..." onChange={onPriceChange}/>      
             </div>
-            <div className="block-edit">
-                <Button children="Вернуться в меню редактирования"
-                    onClick={() => setIsEditProduct(null)}
-                />
-                <Button children="Coхранить"
-                    onClick={() => onSave()}
-                />
-            </div>
+            <Button children="Coхранить"
+                onClick={() => onSave()}
+            />
+            <Button children="Вернуться в меню редактирования"
+                onClick={() => setIsEditProduct(null)}
+            />
     </div>
     );
 };
@@ -84,6 +82,8 @@ const EditBlockProductContainer = ({className, isEditProduct, setIsEditProduct, 
 export const EditBlockProduct = styled(EditBlockProductContainer)`
     display: flex;
     flex-direction: column;
+    margin: 10px;
+    gap: 10px;
     .block-edit {
         display: flex;
         gap: 10px;
@@ -96,6 +96,12 @@ export const EditBlockProduct = styled(EditBlockProductContainer)`
         border-radius: 5px;
         padding: 10px;
         font-size: 18px;
+    }
+    .block-name {
+        text-align: center;
+        font-weight: 700;
+        color: #fff;
+        font-size: 24px;
     }
 `;
 

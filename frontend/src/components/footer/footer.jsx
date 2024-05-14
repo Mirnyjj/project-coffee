@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { styled } from "styled-components";
 import { Icon } from "../icon/icon";
+import { device } from "../../adaptiv-styled/device";
 
 
  const FooterContainer = ({ className }) => {
@@ -18,30 +19,51 @@ import { Icon } from "../icon/icon";
     }, [])
     return (
         <div className={className}>
-            <div>
-                <div>This website was developed by Mirnyjj Maxim</div>
-                <a href="https://t.me/Maksim13777">
-                <Icon id="fa-telegram" margin="10px 0 0 15px"/>
-                </a>
-            </div>
-            <div>
-                <div>{city}, {''} 
-                    {new Date().toLocaleString('ru', {day: 'numeric', month: 'long'})}
+            <div>Информация на сайте не является публичной офертой</div>
+            <div className="info-footer">
+                <div className="info-developed">
+                    Developed <br/>
+                    <a href="https://t.me/Maksim13777">
+                    <Icon id="fa-telegram" margin="1px 0 0 5px"/>
+                    </a>
                 </div>
-                <div>{temperature} градусов, {weather}</div>
+                <div>
+                    <div>{city}, {''} 
+                        {new Date().toLocaleString('ru', {day: 'numeric', month: 'long'})}
+                    </div>
+                    <div>{temperature} градусов, {weather}</div>
+                </div>
             </div>
         </div>
     )
 }
 
 export const Footer = styled(FooterContainer)`
+@media ${device.desktop} {
+    font-size: 20px;
+  }
+  
+  @media ${device.tablet} {
+    font-size: 14px;
+  }
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    text-align: center;
+    gap: 5px;
     width: 100%;
     height: 120px;
-    padding: 20px 40px;
-    font-weight: bold;
+    padding: 20px 20px;
     box-shadow: 0 0px 8px #000;
     background-color: #fff;
+    font-style: italic; 
+    .info-footer {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+    }
+    .info-developed {
+
+    }
 `;

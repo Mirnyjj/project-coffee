@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import VideoBackground from "./video/VideoBackground.mp4"
 import { useNavigate } from "react-router";
+import { device } from "../../../../adaptiv-styled/device";
 
 const BackgroundVideoContainer = ({className}) => {
   const navigate = useNavigate();
@@ -8,8 +9,8 @@ const BackgroundVideoContainer = ({className}) => {
   return (
     <div className={className}>
         <div className="front-text">Оазис в сердце города <br /> Лучшее место для отдыха в Инзе</div>
-        <video className="Video-player" loop autoPlay muted={true}>
-            <source src={VideoBackground} type="video/mp4" />
+        <video className="video-player" loop autoPlay muted={true} playsInline>
+          <source src={VideoBackground} type="video/mp4" />
         </video>
         <button className="background-button" onClick={() => navigate('/menu')}>Перейти к меню</button>
     </div>
@@ -17,20 +18,56 @@ const BackgroundVideoContainer = ({className}) => {
 };
 
 export const BackgroundVideo = styled(BackgroundVideoContainer)`
-width: 100%;
-height: 750px;
 
-.Video-player {
-    position: absolute;
+@media ${device.desktop} {
+  font-size: 50px;
+  button {
+    font-size: 30px;
+    top: 20%;
+  }
+  .video-player {
+    height: 700px;
+  }
+  .front-text {
+    top: 10%;
+  }
+}
+
+@media ${device.laptopL} {
+  font-size: 40px;
+  button {
+    font-size: 30px;
+    top: 20%;
+  }
+  .video-player {
+    height: 500px;
+  }
+}
+
+@media ${device.tablet} {
+  font-size: 27px;
+  button {
+    font-size: 20px;
+    top: 25%;
+  }
+  .video-player {
+    height: 400px;
+  }
+  .front-text {
+    top: 13%;
+  }
+}
+@media ${device.mobileL} {
+  font-size: 23px;
+}
+
+.video-player {
     object-fit: cover;
-    width: 100%;
-    height: 750px;
-    z-index: 1;
     opacity: 0.8;
+    width: 100%;
   }
   .front-text {
     left: 50%;
-    top: 10%;
     transform: translateX(-50%);
     position: absolute;
     text-align: center;
@@ -40,16 +77,13 @@ height: 750px;
     font-family: "Rubik Scribble", system-ui;
     font-weight: 700;
     font-style: normal;
-    font-size: 50px;
   }
   .background-button {
     position: absolute;
     left: 50%;
-    top: 28%;
     transform: translateX(-50%);
     z-index: 2;
     white-space: nowrap;
-    font-size: 30px;
     font-weight: 600;
     background-color: #fb9c13;
     border-radius: 20px;

@@ -1,13 +1,12 @@
 import { styled } from "styled-components";
 import { Icon } from "../../../../components";
+import { device } from "../../../../adaptiv-styled/device";
 
 
-const ContactsContainer = ({ className }) => {
-
-    return (
+const ContactsContainer = ({ className }) => (
         <div className={className}>
-                    Наши контакты:
                         <div className="contacts">
+                            Наши контакты: <br/>
                             +7 (937) 881-85-78
                         </div>
                         <div className="contacts-messenger">
@@ -29,10 +28,15 @@ const ContactsContainer = ({ className }) => {
                         </div>
         </div>
     )
-   
-};
 
 export const Contacts = styled(ContactsContainer)`
+    @media ${device.tablet} {
+        .contacts{
+            display: none;
+        }
+    }
+
+
     display: flex;
     flex-direction: column;
     font-style: italic; 

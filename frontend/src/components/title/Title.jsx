@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import PropTypes from 'prop-types';
+import { device } from "../../adaptiv-styled/device";
 
 const TitleContainer = ({ className, title, ...props }) => {
 
@@ -11,6 +12,13 @@ const TitleContainer = ({ className, title, ...props }) => {
 };
 
 export const Title = styled(TitleContainer)`
+@media ${device.desktop} {
+    font-size: 50px;
+  }
+  
+  @media ${device.tablet} {
+    font-size: 30px;
+  }
     padding-top: ${({top = '20px'}) => top}; 
     text-align: center;
     color: white;
@@ -20,7 +28,6 @@ export const Title = styled(TitleContainer)`
     font-family: "Rubik Scribble", system-ui;
     font-weight: 700;
     font-style: normal;
-    font-size: ${({size = '50'}) => size};
   
 `;
 

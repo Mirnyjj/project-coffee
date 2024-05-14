@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import { Button, Title } from "../../../../components";
 import { useNavigate } from "react-router";
 import PropTypes from 'prop-types';
+import { device } from "../../../../adaptiv-styled/device";
 
 
 const OrderRequestSentContainer = ({className, numberOrder}) => {
@@ -20,7 +21,7 @@ const OrderRequestSentContainer = ({className, numberOrder}) => {
                 <div className="order-sent">
                     <Title title={`Ваш заказ №${numberOrder} успешно отправлен!`} size="50px"/>
                     <div className="expectation-call">
-                        В ближайшее время, с Вами свяжется сотрудник заведения, для уточнения деталей заказа.
+                        В ближайшее время с Вами свяжется сотрудник заведения для уточнения деталей заказа.
                     </div>
                     <Button children="Закрыть" onClick={() => onResetBasket()} />
                 </div>
@@ -41,7 +42,7 @@ const OrderRequestSentContainer = ({className, numberOrder}) => {
         width: 100%;
         height: 100%;
     }
-    & .order-sent {
+    .order-sent {
         position: relative;
         top: 50%;
         transform: translate(0, -50%);
@@ -60,6 +61,20 @@ const OrderRequestSentContainer = ({className, numberOrder}) => {
     .expectation-call {
         margin: 20px 20px;
     }
+
+    @media ${device.laptop} {
+        .order-sent {
+            width: 70%;
+            font-size: 20px;
+        }
+      }
+      
+      @media ${device.tablet} {
+        .order-sent {
+            width: 70%;
+            font-size: 16px;
+        }
+      }
     `;
    
     OrderRequestSent.propTypes = {
