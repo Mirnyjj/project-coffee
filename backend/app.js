@@ -20,7 +20,6 @@ app.get('*', (req, res) => {
 });
 
 
-
 mongoose.connect(
     process.env.DB_CONNECTION_STRING
 ).then(() => {
