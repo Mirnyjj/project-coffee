@@ -466,7 +466,7 @@ attempted value: ${s}
         font-family: "Rubik Scribble", system-ui;
         font-weight: 700;
         font-style: normal;
-        font-size: 30px;
+        font-size: 50px;
     }
 
 `,uC=({className:e,product:t})=>{const[n,r]=Jn("myBasket",[]),[i,o]=E.useState(!1),s=l=>{const a=n.some(u=>u.id===l);return o(a),a};return E.useEffect(()=>{s(t.id)},[n]),d.jsxs("div",{className:e,children:[d.jsxs(kr,{to:`/product/${t.id}`,children:[d.jsx(Ci,{imageUrl:t.imageUrl,name:t.title,width:"300px",height:"400px",radius:"10px 10px 0 0"}),d.jsx("div",{className:"product-menu",children:t.title})]}),d.jsx("div",{className:"card-footer",children:d.jsxs("div",{className:"card-info",children:[d.jsxs("div",{className:"price",children:[t.price," ₽"]}),d.jsx("div",{className:"shopping-bag",onClick:()=>{r(sd(n,t)),s(t.id)},children:i?d.jsx(re,{children:"Добавлено"}):d.jsx(Ge,{inactive:!1,id:"fa-shopping-bag",margin:"3px 3px 0 2px;",size:"30px"})})]})})]})},Kg=V(uC)`
@@ -494,7 +494,7 @@ attempted value: ${s}
         font-family: "Rubik Scribble", system-ui;
         font-weight: 700;
         font-style: normal;
-        font-size: 50px;
+        font-size: 30px;
     }
     .card-footer {
         padding: 10px;

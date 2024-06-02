@@ -92,7 +92,7 @@ export const Dish = styled(DishContainer)`
         font-family: "Rubik Scribble", system-ui;
         font-weight: 700;
         font-style: normal;
-        font-size: 50px;
+        font-size: 30px;
     }
     .card-footer {
         padding: 10px;

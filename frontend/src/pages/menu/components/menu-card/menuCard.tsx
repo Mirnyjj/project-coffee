@@ -50,7 +50,7 @@ export const MenuCard = styled(MenuCardContainer)`
         font-family: "Rubik Scribble", system-ui;
         font-weight: 700;
         font-style: normal;
-        font-size: 30px;
+        font-size: 50px;
     }
 
 `;
